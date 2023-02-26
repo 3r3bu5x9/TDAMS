@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name ="customer")
+@Table(name ="customer_tb")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,8 @@ public class Customer {
     @JoinColumn(name = "tid")
     private Tiffin tiffin;
     @JsonIgnore
-    @OneToOne
-    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "oid")
     private Order order;
     public void toUser(UserC userC){
         this.userCc = userC;

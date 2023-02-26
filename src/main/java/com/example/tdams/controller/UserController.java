@@ -1,11 +1,7 @@
 package com.example.tdams.controller;
 
-import com.example.tdams.model.Address;
-import com.example.tdams.model.Role;
-import com.example.tdams.model.UserC;
-import com.example.tdams.service.AddressService;
-import com.example.tdams.service.RoleService;
-import com.example.tdams.service.UserService;
+import com.example.tdams.model.*;
+import com.example.tdams.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,34 +12,50 @@ public class UserController {
     UserService userService;
     RoleService roleService;
     AddressService addressService;
+    CustomerService customerService;
+    VendorService vendorService;
+    DeliveryPersonnelService deliveryPersonnelService;
 
-    public UserController(UserService userService, RoleService roleService, AddressService addressService) {
+    public UserController(UserService userService, RoleService roleService, AddressService addressService, CustomerService customerService, VendorService vendorService, DeliveryPersonnelService deliveryPersonnelService) {
         this.userService = userService;
         this.roleService = roleService;
         this.addressService = addressService;
+        this.customerService = customerService;
+        this.vendorService = vendorService;
+        this.deliveryPersonnelService = deliveryPersonnelService;
     }
+
     @GetMapping("/all")
     public List<UserC> showAllUsers(){
         return userService.showAllUsers();
     }
-    @PostMapping("/add")
-    public UserC saveUser(@RequestBody UserC userC){
-        return userService.saveUser(userC);
-    }
-    @PutMapping("/{uid}/address/{aid}")
-    public UserC assignAddressToUser(@PathVariable Long uid, @PathVariable Long aid){
-        UserC userC = userService.findUserById(uid);
-        Address address = addressService.findAddressById(aid);
-        userC.assignAddress(address);
-        address.assignUser(userC);
-        return userService.saveUser(userC);
-    }
-    @PutMapping("/{uid}/role/{rid}")
-    public UserC assignRoleToUser(@PathVariable Long uid, @PathVariable Long rid){
-        UserC userC = userService.findUserById(uid);
-        Role role = roleService.findRoleById(rid);
+    @PostMapping("/add/role/{role_id}")
+    public UserC addUserWithRole(@RequestBody UserC userC, @PathVariable Long role_id)
+    {
+        Role role = roleService.findRoleById(role_id);
         userC.assignRole(role);
         role.assignUser(userC);
+        switch (role.getName()) {
+            case "CUSTOMER" -> {
+                Customer customer = new Customer();
+                customer.setBalance(0.0);
+                customer.toUser(userC);
+                customerService.addCustomer(customer);
+            }
+            case "VENDOR" -> {
+                Vendor vendor = new Vendor();
+            }
+            case "DELIVERY_PERSONNEL" -> {
+                DeliveryPersonnel deliveryPersonnel = new DeliveryPersonnel();
+            }
+            default -> {
+                System.out.println("Admin User!!!");
+            }
+        }
         return userService.saveUser(userC);
+    }
+    @PostMapping("/update/{user_id}")
+    public UserC updateUserInfo(@PathVariable Long user_id, @RequestBody UserC newUser){
+        return userService.updateUser(user_id,newUser);
     }
 }

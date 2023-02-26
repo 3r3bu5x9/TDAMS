@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "role")
+@Table(name = "role_tb")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

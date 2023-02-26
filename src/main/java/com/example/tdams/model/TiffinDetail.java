@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "tiffindetail")
+@Table(name = "tiffindetail_tb")
 public class TiffinDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

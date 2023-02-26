@@ -1,6 +1,5 @@
 package com.example.tdams.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "vendor")
+@Table(name = "vendor_tb")
 public class Vendor {
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)

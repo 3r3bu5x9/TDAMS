@@ -1,0 +1,82 @@
+Add all Roles
+===========
+POST | localhost:8080/role/add/all
+
+sample body:
+[
+	{
+		"name":"ADMIN"
+	},
+	{
+		"name":"CUSTOMER"
+	},
+	{
+		"name":"VENDOR"
+	},
+	{
+		"name":"DELIVERY_PERSONNEL"
+	}
+]
+
+Add User with Role
+================
+POST | localhost:8080/user/add/role/{role_id}
+
+sample body:
+{
+	"firstName": "debasis",
+	"lastName": "buxy",
+	"mob": "7596893541",
+	"dob": "1997-08-21",
+	"uname": "erebus",
+	"passwd": "12345"
+}
+
+Update User info
+==============
+POST | localhost:8080/user/update/{user_id}
+
+sample body:
+{
+	"firstName": "erebus",
+	"lastName": "x9",
+	"mob": "7596893541",
+	"dob": "1997-08-21",
+	"uname": "erebus",
+	"passwd": "9999"
+}
+
+Assign Address to User (logged in)
+====================
+POST | localhost:8080/address/add/user/{user_id}
+
+sample body:
+{
+	"flatNo": "1201",
+	"street": "hinjewadi",
+	"landmark": "biotech park",
+	"city": "pune",
+	"pincode": "700056"
+}
+
+Update Address (of logged in User)
+=============
+POST | localhost:8080/address/update/{address_id}
+
+sample body:
+{
+	"flatNo": "1501",
+	"street": "hinjewadi",
+	"landmark": "sunbeam",
+	"city": "pune",
+	"pincode": "700056"
+}
+
+Show all Addresses
+================
+GET | localhost:8080/address/all
+
+Show all Customers
+=================
+GET | localhost:8080/cust/all
+

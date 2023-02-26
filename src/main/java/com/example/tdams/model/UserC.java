@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@Table(name = "user")
+@Table(name = "user_tb")
 public class UserC {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,8 @@ public class UserC {
     private String uname;
     @Column(nullable = false)
     private String passwd;
+    @Column(nullable = false)
+    private Boolean isSuspended = Boolean.FALSE;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "rid")
     private Role role;

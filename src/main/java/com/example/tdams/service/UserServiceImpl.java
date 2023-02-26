@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService{
         oldUserC.setLastName(newUserC.getLastName());
         oldUserC.setUname(newUserC.getUname());
         oldUserC.setMob(newUserC.getMob());
+        oldUserC.setDob(newUserC.getDob());
         oldUserC.setPasswd(newUserC.getPasswd());
         return userRepository.save(oldUserC);
     }

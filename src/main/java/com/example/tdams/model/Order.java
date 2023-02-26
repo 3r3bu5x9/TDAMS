@@ -6,14 +6,14 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "order")
+@Table(name = "order_tb")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;
     @Column
     private Boolean isDelivered;
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "order")
     private Customer customer;
     @JsonIgnore
     @ManyToOne
