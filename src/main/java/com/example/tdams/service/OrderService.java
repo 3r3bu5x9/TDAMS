@@ -8,6 +8,6 @@ public interface OrderService {
     List<Order> showAllOrders();
     Order addOrder(Order order);
     Order findOrderById(Long oid);
-    Integer checkIfDelivered(Long oid);
     Order setDeliveryStatus(Long oid,Integer status);
+    Order setIsPickedUpStatus(Long oid,Integer status);
 }

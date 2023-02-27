@@ -22,16 +22,23 @@ public class ItemController {
     public List<Item> showAllItems(){
         return itemService.showAllItems();
     }
-    @PostMapping("/add")
-    public Item addItem(Item item){
-        return itemService.addItem(item);
+    @GetMapping("/all/{vendor_id}")
+    public List<Item> showAllVendorItems(@PathVariable Long vendor_id){
+        return vendorService.findVendorById(vendor_id).getItems();
     }
-    @PutMapping("/{item_id}/vendor/{vendor_id}")
-    public Vendor populateItems(@PathVariable Long item_id, @PathVariable Long vendor_id){
-        Item item = itemService.findItemById(item_id);
+    @PostMapping("/add/vendor/{vendor_id}")
+    public Item populateItems(@PathVariable Long vendor_id, @RequestBody Item item){
         Vendor vendor = vendorService.findVendorById(vendor_id);
         item.assignVendor(vendor);
         vendor.populateItems(item);
-        return vendorService.addVendor(vendor);
+        return itemService.addItem(item);
+    }
+    @PostMapping("/update/{item_id}")
+    public Item updateItem(@PathVariable Long item_id, @RequestBody Item newItem){
+        return itemService.updateItem(item_id, newItem);
+    }
+    @GetMapping("/delete/{item_id}")
+    public Item deleteItem(@PathVariable Long item_id){
+        return itemService.deleteItemById(item_id);
     }
 }

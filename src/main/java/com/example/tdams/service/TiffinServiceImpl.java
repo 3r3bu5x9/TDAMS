@@ -28,4 +28,11 @@ public class TiffinServiceImpl implements TiffinService{
     public Tiffin findTiffinById(Long tid) {
         return tiffinRepository.findById(tid).get();
     }
+
+    @Override
+    public Tiffin deleteTiffin(Long tid) {
+        Tiffin tiffin = tiffinRepository.findById(tid).get();
+        tiffinRepository.deleteById(tid);
+        return tiffin;
+    }
 }

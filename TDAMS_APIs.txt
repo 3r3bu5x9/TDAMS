@@ -80,3 +80,156 @@ Show all Customers
 =================
 GET | localhost:8080/cust/all
 
+Vendor add item
+==============
+POST | localhost:8080/item/add/vendor/{vendor_id}/
+
+sample body:
+
+{
+	"name": "Roti",
+	"qty": 100,
+	"price": 5
+}
+
+Vendor delete item
+================
+GET | localhost:8080/item/delete/{item_id}
+
+Show all vendor items
+===================
+GET | localhost:8080/item/all/{vendor_id}
+
+Show all items
+============
+GET | localhost:8080/item/all
+
+Vendor update item
+=================
+POST | localhost:8080/item/update/{item_id}
+
+sample body:
+
+Vendor view balance
+==================
+GET | localhost:8080/vendor/bal/{vendor_id}
+
+Show all Vendors
+===============
+GET | localhost:8080/vendor/all
+
+Vendor find by Id
+===============
+GET | localhost:8080/vendor/{vendor_id}
+
+Customer, create Tiffin (logged in)
+=======================
+GET | localhost:8080/tiffin/add/cust/{cust_id}
+
+Customer, Tiffin add Tiffin TiffinDetails (logged in)
+=========================================
+POST | localhost:8080/tiffindetail/add/cust/{cust_id}
+
+sample body:
+
+{
+	"item": {
+		"iid": 1,
+		"name": "Roti",
+		"qty": 50,
+		"price": 6.0
+	},
+	"qty": 1
+}
+
+Customer, update Tiffin
+=======================
+POST | localhost:8080/tiffin/update/{cust_id}
+
+sample body:
+
+{
+	"tid": 1,
+	"tiffinDetails": [
+		{
+			"tdid": 1,
+			"qty": 6,
+			"item": {
+				"iid": 1,
+				"name": "Roti",
+				"qty": 100,
+				"price": 6.0
+			}
+		}
+	]
+}
+
+Customer, delete Tiffindetail ❌
+=============================
+GET | localhost:8080/tiffindetail/delete/{tiffin_detail_id}
+
+Customer, delete Tiffin ❌
+=======================
+GET | localhost:8080/tiffin/delete/{cust_id}
+
+Show Customer tiffin
+====================
+GET | localhost:8080/tiffin/cust/{cust_id}
+
+
+Show all Tiffins
+================
+GET | localhost:8080/tiffin/all
+
+Show all TiffinDetails
+======================
+GET | localhost:8080/tiffindetail/all
+
+Customer view balance
+=====================
+GET | localhost:8080/cust/bal/{cust_id}
+
+Customer place order
+====================
+GET | localhost:8080/order/add/cust/{cust_id}
+
+Customer show order
+===================
+GET | localhost:8080/order/cust/{cust_id}
+
+Customer cancel order
+=====================
+
+Show all orders
+===============
+GET | localhost:8080/order/all
+
+DeliveryPersonnel set order as accepted
+=======================================
+POST | localhost:8080/order/set/acptstatus/{order_id}/delp/{del_id}
+
+sample body:
+
+DeliveryPersonnel set order as delivered 
+========================================
+(calculate and set balance of vendor and customer)
+
+POST | localhost:8080/order/set/delstatus/{order_id}
+
+sample body:
+
+DeliveryPersonnel set intime
+============================
+POST | localhost:8080/deliveryp/intime/{del_id}
+
+DeliveryPersonnel set outTime
+=============================
+POST | localhost:8080/deliveryp/outtime/{del_id}
+
+DeliveryPersonnel set hourly rate
+=================================
+POST | localhost:8080/deliveryp/rate/{del_id}
+
+Show all DeliveryPersonnel
+==========================
+GET | localhost:8080/deliveryp/all

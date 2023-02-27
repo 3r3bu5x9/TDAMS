@@ -43,7 +43,7 @@ Admin
 
 # vendor items set for week
 # customer can order multiple meals x
-
+# Implement rating system 🧩
 
 {
 mid: 1,
@@ -105,26 +105,26 @@ show QR -> user pays -> admin updates balance after verifying payment
 COMMON~
 ----------
 
-Create Account (separate pages for each role)
+Create Account (separate pages for each role, role selection separate)
 =============
 add to USER -> internally create CUSTOMER -> internally assign CUSTOMER to USER
 
-CUSTOMER
-VENDOR
+CUSTOMER✅
+VENDOR✅
 DELIVERY_PERSONNEL
 
 Delete Account
 =============
 
-Add Address
+Add Address✅
 ==========
 add to ADDRESS -> internally assign ADDRESS to USER
 
-Update user info
+Update user info✅
 ==============
 update USER info
 
-Update address
+Update address✅
 =============
 update ADDRESS
 
@@ -136,17 +136,22 @@ Create Tiffin
 ===========
 select ITEM and qty (x n) ->  submit  -> internally create TIFFIN -> add ITEM and qty (xn) to TIFFIN_DETAIL + assign TIFFIN_DETAIL to TIFFIN -> internally assign TIFFIN to logged in CUSTOMER
 
+
+Create tiffin -> add TiffinDetails
+
+Update Tiffin
+=============
+
 Place Order
 ===========
 create ORDER -> internally set isDelivered to false -> internally assign logged in CUSTOMER to ORDER
 
-Modify Order / Update tiffin
-=========================
-select ITEM and qty (x n) ->  submit -> delete associated TIFFIN_DETAILs -> add new ITEM and qty (xn) to TIFFIN_DETAIL + assign MEAL_DETAIL to old TIFFIN
-
 Cancel Order
 ===========
 search for order with the cid of logged in CUSTOMER and delete it
+
+View Order
+=========
 
 View Balance
 ===========
@@ -162,23 +167,23 @@ View all items
 VENDOR~
 ---------
 
-Add item
+Add item ✅
 =======
 add ITEM -> assign it to Vendor
 
-Update qty
+Update qty ✅
 =========
 show ITEMS -> select ITEM -> set qty of ITEM 
 
-Delete item
+Delete item ✅
 =========
 show ITEMS -> select ITEM -> delete ITEM
 
-View all items
+View all items ✅
 ============
 show ITEMS
 
-View balance
+View balance ✅
 ===========
 view balance
 

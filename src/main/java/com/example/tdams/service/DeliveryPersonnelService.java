@@ -11,4 +11,5 @@ public interface DeliveryPersonnelService {
     DeliveryPersonnel findDeliveryPersonnelById(Long dpid);
     DeliveryPersonnel setInTime(Long dpid, Date inTime);
     DeliveryPersonnel setOutTime(Long dpid, Date outTime);
+    DeliveryPersonnel hourlyRate(Long dpid, Double newHourlyRate);
 }

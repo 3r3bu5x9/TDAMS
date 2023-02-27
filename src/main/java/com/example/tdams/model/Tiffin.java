@@ -1,5 +1,6 @@
 package com.example.tdams.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class Tiffin {
     private Long tid;
     @OneToMany(mappedBy = "tiffin",cascade = CascadeType.ALL)
     private List<TiffinDetail> tiffinDetails = new ArrayList<>();
+    @JsonIgnore
     @OneToOne(mappedBy = "tiffin")
     private Customer customer;
 

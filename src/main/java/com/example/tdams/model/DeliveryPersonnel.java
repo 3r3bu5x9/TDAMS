@@ -20,7 +20,7 @@ public class DeliveryPersonnel {
     @Temporal(TemporalType.TIMESTAMP)
     @Column
     private Date outTime;
-    @Column(nullable = false)
+    @Column
     private Double hourlyRate;
     @Column(nullable = false)
     private Double balance;

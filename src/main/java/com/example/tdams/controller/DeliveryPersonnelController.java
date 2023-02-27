@@ -26,22 +26,18 @@ public class DeliveryPersonnelController {
     public DeliveryPersonnel addDeliveryPersonnel(@RequestBody DeliveryPersonnel deliveryPersonnel){
         return deliveryPersonnelService.addDeliveryPersonnel(deliveryPersonnel);
     }
-    @PostMapping("/intime/del_id")
+    @PostMapping("/intime/{del_id}")
     public DeliveryPersonnel setInTime(@PathVariable Long del_id,@RequestBody Date intime)
     {
         return deliveryPersonnelService.setInTime(del_id,intime);
     }
-    @PostMapping("/outtime/del_id")
+    @PostMapping("/outtime/{del_id}")
     public DeliveryPersonnel setOutTime(@PathVariable Long del_id,@RequestBody Date outtime)
     {
         return deliveryPersonnelService.setInTime(del_id,outtime);
     }
-    @PutMapping("/{del_id}/user/{user_id}")
-    public DeliveryPersonnel toUser(@PathVariable Long del_id, @PathVariable Long user_id){
-        DeliveryPersonnel deliveryPersonnel = deliveryPersonnelService.findDeliveryPersonnelById(del_id);
-        UserC userC = userService.findUserById(user_id);
-        deliveryPersonnel.toUser(userC);
-        userC.toDeliveryPersonnel(deliveryPersonnel);
-        return deliveryPersonnelService.addDeliveryPersonnel(deliveryPersonnel);
+    @PostMapping("/rate/{del_id}")
+    public DeliveryPersonnel setHourlyRate(@PathVariable Long del_id, @RequestBody Double newHourlyRate){
+        return deliveryPersonnelService.hourlyRate(del_id,newHourlyRate);
     }
 }

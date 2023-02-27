@@ -30,14 +30,16 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Integer checkIfDelivered(Long oid) {
-        return orderRepository.findById(oid).get().getIsDelivered() ? 1 : 0;
-    }
-
-    @Override
     public Order setDeliveryStatus(Long oid,Integer status) {
         Order order = orderRepository.findById(oid).get();
         order.setIsDelivered((status == 1) ? Boolean.TRUE:Boolean.FALSE);
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order setIsPickedUpStatus(Long oid, Integer status) {
+        Order order = orderRepository.findById(oid).get();
+        order.setIsPickedUp((status == 1) ? Boolean.TRUE:Boolean.FALSE);
         return orderRepository.save(order);
     }
 }

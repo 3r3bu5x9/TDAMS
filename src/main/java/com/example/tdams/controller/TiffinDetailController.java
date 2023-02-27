@@ -1,9 +1,13 @@
 package com.example.tdams.controller;
 
+import com.example.tdams.model.Customer;
 import com.example.tdams.model.Item;
+import com.example.tdams.model.Tiffin;
 import com.example.tdams.model.TiffinDetail;
+import com.example.tdams.service.CustomerService;
 import com.example.tdams.service.ItemService;
 import com.example.tdams.service.TiffinDetailService;
+import com.example.tdams.service.TiffinService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,34 +17,34 @@ import java.util.List;
 public class TiffinDetailController {
     TiffinDetailService tiffinDetailService;
     ItemService itemService;
+    TiffinService tiffinService;
+    CustomerService customerService;
 
-    public TiffinDetailController(TiffinDetailService tiffinDetailService, ItemService itemService) {
+    public TiffinDetailController(TiffinDetailService tiffinDetailService, ItemService itemService, TiffinService tiffinService, CustomerService customerService) {
         this.tiffinDetailService = tiffinDetailService;
         this.itemService = itemService;
+        this.tiffinService = tiffinService;
+        this.customerService = customerService;
     }
+
     @GetMapping("/all")
     public List<TiffinDetail> showAllTiffinDetail(){
         return tiffinDetailService.showAllTiffinDetail();
     }
-    @PostMapping("/add")
-    public TiffinDetail addTiffinDetail(TiffinDetail tiffinDetail){
-        return tiffinDetailService.addTiffinDetail(tiffinDetail);
+    @PostMapping("/add/cust/{cust_id}")
+    public Tiffin addTiffinDetail(@PathVariable Long cust_id,@RequestBody TiffinDetail tiffinDetail){
+        Customer customer = customerService.findCustomerById(cust_id);
+        Tiffin tiffin = customer.getTiffin();
+        tiffin.addDetails(tiffinDetail);
+        tiffinDetail.assignTiffin(tiffin);
+        customer.assignTiffin(tiffin);
+        tiffin.assignCustomer(customer);
+        return tiffinService.addTiffin(tiffin);
     }
-    @GetMapping("/{tiffin_detail_id}")
-    public TiffinDetail findTiffinDetailById(@PathVariable Long tiffin_detail_id){
-        return tiffinDetailService.findTiffinDetailById(tiffin_detail_id);
-    }
-    @PostMapping("/{tiffin_detail_id}")
-    public Long updateQuantity(@PathVariable Long tiffin_detail_id, @RequestBody Long qty){
-        return tiffinDetailService.updateQuantity(tiffin_detail_id, qty);
-    }
-    @PutMapping("/{tiffin_detail_id}/item/{item_id}")
-    public TiffinDetail assignItem(@PathVariable Long tiffin_detail_id, @PathVariable Long item_id){
-        TiffinDetail tiffinDetail = tiffinDetailService.findTiffinDetailById(tiffin_detail_id);
-        Item item = itemService.findItemById(item_id);
-        tiffinDetail.assignItem(item);
-        tiffinDetail.setQty(0L);
-        item.assignToTiffinDetail(tiffinDetail);
-        return tiffinDetailService.addTiffinDetail(tiffinDetail);
-    }
+//    @GetMapping("/delete/{tiffin_detail_id}/cust/{cust_id}")
+//    public Tiffin deleteTiffinDetail(@PathVariable Long cust_id,@PathVariable Long tiffin_detail_id){
+//        Tiffin tiffin = customerService.findCustomerById(cust_id).getTiffin();
+//        tiffin.getTiffinDetails().remove(tiffinDetailService.findTiffinDetailById(tiffin_detail_id));
+//        return tiffinService.addTiffin(tiffin);
+//    }
 }

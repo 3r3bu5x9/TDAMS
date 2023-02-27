@@ -35,4 +35,11 @@ public class TiffinDetailServiceImpl implements TiffinDetailService{
         tiffinDetail.setQty(qty);
         return tiffinDetailRepository.findById(tdid).get().getQty();
     }
+
+    @Override
+    public TiffinDetail deleteTiffinDetail(Long tdid) {
+        TiffinDetail tiffinDetail = tiffinDetailRepository.findById(tdid).get();
+        tiffinDetailRepository.deleteById(tdid);
+        return tiffinDetail;
+    }
 }

@@ -9,4 +9,5 @@ public interface TiffinDetailService {
     TiffinDetail findTiffinDetailById(Long mdid);
     TiffinDetail addTiffinDetail(TiffinDetail tiffinDetail);
     Long updateQuantity(Long mdid, Long qty);
+    TiffinDetail deleteTiffinDetail(Long tdid);
 }

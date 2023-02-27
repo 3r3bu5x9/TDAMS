@@ -43,4 +43,11 @@ public class DeliveryPersonnelServiceImpl implements DeliveryPersonnelService{
         deliveryPersonnel.setInTime(outTime);
         return deliveryPersonnelRepository.save(deliveryPersonnel);
     }
+
+    @Override
+    public DeliveryPersonnel hourlyRate(Long dpid, Double newHourlyRate) {
+        DeliveryPersonnel deliveryPersonnel = deliveryPersonnelRepository.findById(dpid).get();
+        deliveryPersonnel.setHourlyRate(newHourlyRate);
+        return deliveryPersonnelRepository.save(deliveryPersonnel);
+    }
 }

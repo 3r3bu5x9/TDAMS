@@ -44,9 +44,15 @@ public class UserController {
             }
             case "VENDOR" -> {
                 Vendor vendor = new Vendor();
+                vendor.setBalance(0.0);
+                vendor.toUser(userC);
+                vendorService.addVendor(vendor);
             }
             case "DELIVERY_PERSONNEL" -> {
                 DeliveryPersonnel deliveryPersonnel = new DeliveryPersonnel();
+                deliveryPersonnel.setBalance(0.0);
+                deliveryPersonnel.toUser(userC);
+                deliveryPersonnelService.addDeliveryPersonnel(deliveryPersonnel);
             }
             default -> {
                 System.out.println("Admin User!!!");

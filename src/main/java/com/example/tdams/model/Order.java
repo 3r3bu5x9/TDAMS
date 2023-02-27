@@ -13,6 +13,8 @@ public class Order {
     private Long oid;
     @Column
     private Boolean isDelivered;
+    @Column
+    private Boolean isPickedUp;
     @OneToOne(mappedBy = "order")
     private Customer customer;
     @JsonIgnore
