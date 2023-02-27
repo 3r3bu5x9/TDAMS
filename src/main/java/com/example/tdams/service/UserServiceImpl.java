@@ -45,4 +45,11 @@ public class UserServiceImpl implements UserService{
     public UserC deleteUserById(Long uid) {
         return null;
     }
+
+    @Override
+    public UserC setSuspensionStatus(Long uid, Integer status) {
+        UserC userC = userRepository.findById(uid).get();
+        userC.setIsSuspended(((status == 1) ? Boolean.TRUE:Boolean.FALSE));
+        return userRepository.save(userC);
+    }
 }

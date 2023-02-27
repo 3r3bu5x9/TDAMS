@@ -72,7 +72,7 @@ public class OrderController {
         Customer customer = order.getCustomer();
         Tiffin tiffin = customer.getTiffin();
         List<TiffinDetail> tiffinDetails = tiffin.getTiffinDetails();
-        orderService.setDeliveryStatus(order_id,status);
+        orderService.setIsPickedUpStatus(order_id,status);
         for (TiffinDetail td : tiffinDetails) {
             Vendor vendor = td.getItem().getVendor();
             itempricexqty = td.getQty()*td.getItem().getPrice();

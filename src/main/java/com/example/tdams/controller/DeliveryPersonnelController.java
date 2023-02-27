@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RequestMapping("/deliveryp")
 @RestController
@@ -22,9 +23,9 @@ public class DeliveryPersonnelController {
     public List<DeliveryPersonnel> showAllDeliveryPersonnel(){
         return deliveryPersonnelService.showAllDeliveryPersonnel();
     }
-    @PostMapping("/add")
-    public DeliveryPersonnel addDeliveryPersonnel(@RequestBody DeliveryPersonnel deliveryPersonnel){
-        return deliveryPersonnelService.addDeliveryPersonnel(deliveryPersonnel);
+    @GetMapping("/{del_id}")
+    public DeliveryPersonnel getById(@PathVariable Long del_id){
+        return deliveryPersonnelService.findDeliveryPersonnelById(del_id);
     }
     @PostMapping("/intime/{del_id}")
     public DeliveryPersonnel setInTime(@PathVariable Long del_id,@RequestBody Date intime)
@@ -34,10 +35,17 @@ public class DeliveryPersonnelController {
     @PostMapping("/outtime/{del_id}")
     public DeliveryPersonnel setOutTime(@PathVariable Long del_id,@RequestBody Date outtime)
     {
-        return deliveryPersonnelService.setInTime(del_id,outtime);
+        return deliveryPersonnelService.setOutTime(del_id,outtime);
     }
     @PostMapping("/rate/{del_id}")
     public DeliveryPersonnel setHourlyRate(@PathVariable Long del_id, @RequestBody Double newHourlyRate){
         return deliveryPersonnelService.hourlyRate(del_id,newHourlyRate);
+    }
+    @GetMapping("/compute/bal/{del_id}")
+    public DeliveryPersonnel getIntime(@PathVariable Long del_id){
+        DeliveryPersonnel deliveryPersonnel = deliveryPersonnelService.findDeliveryPersonnelById(del_id);
+        double bal = (TimeUnit.SECONDS.convert(deliveryPersonnel.getOutTime().getTime()-deliveryPersonnel.getInTime().getTime(),TimeUnit.MILLISECONDS)/3600.0)*deliveryPersonnel.getHourlyRate();
+        deliveryPersonnel.setBalance(bal);
+        return deliveryPersonnelService.addDeliveryPersonnel(deliveryPersonnel);
     }
 }

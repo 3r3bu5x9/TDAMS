@@ -40,7 +40,7 @@ public class DeliveryPersonnelServiceImpl implements DeliveryPersonnelService{
     @Override
     public DeliveryPersonnel setOutTime(Long dpid, Date outTime) {
         DeliveryPersonnel deliveryPersonnel = deliveryPersonnelRepository.findById(dpid).get();
-        deliveryPersonnel.setInTime(outTime);
+        deliveryPersonnel.setOutTime(outTime);
         return deliveryPersonnelRepository.save(deliveryPersonnel);
     }
 
