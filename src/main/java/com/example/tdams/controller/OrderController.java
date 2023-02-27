@@ -47,6 +47,14 @@ public class OrderController {
     public Order findOrderById(@PathVariable Long order_id){
         return orderService.findOrderById(order_id);
     }
+    @GetMapping("/accept/{order_id}/delp/{del_id}")
+    public Order acceptOrder(@PathVariable Long order_id, @PathVariable Long del_id){
+        Order order = orderService.findOrderById(order_id);
+        DeliveryPersonnel deliveryPersonnel = deliveryPersonnelService.findDeliveryPersonnelById(del_id);
+        order.assignDeliveryPersonnel(deliveryPersonnel);
+        deliveryPersonnel.populateOrder(order);
+        return orderService.addOrder(order);
+    }
     @PostMapping("/set/delstatus/{order_id}")
     public Order setDeliveryStatus(@PathVariable Long order_id, @RequestBody Integer status){
         double itempricexqty = 0.0;
@@ -62,13 +70,10 @@ public class OrderController {
         customerService.addCustomer(customer);
         return orderService.addOrder(order);
     }
-    @PostMapping("/set/acptstatus/{order_id}/delp/{del_id}")
-    public Order setPickedUpStatus(@PathVariable Long order_id, @PathVariable Long del_id,@RequestBody Integer status){
+    @PostMapping("/set/pickedstatus/{order_id}")
+    public Order setPickedUpStatus(@PathVariable Long order_id, @RequestBody Integer status){
         double itempricexqty = 0.0;
         Order order = orderService.findOrderById(order_id);
-        DeliveryPersonnel deliveryPersonnel = deliveryPersonnelService.findDeliveryPersonnelById(del_id);
-        deliveryPersonnel.populateOrder(order);
-        order.assignDeliveryPersonnel(deliveryPersonnel);
         Customer customer = order.getCustomer();
         Tiffin tiffin = customer.getTiffin();
         List<TiffinDetail> tiffinDetails = tiffin.getTiffinDetails();

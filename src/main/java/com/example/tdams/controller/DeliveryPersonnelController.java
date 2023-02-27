@@ -45,7 +45,7 @@ public class DeliveryPersonnelController {
     public DeliveryPersonnel getIntime(@PathVariable Long del_id){
         DeliveryPersonnel deliveryPersonnel = deliveryPersonnelService.findDeliveryPersonnelById(del_id);
         double bal = (TimeUnit.SECONDS.convert(deliveryPersonnel.getOutTime().getTime()-deliveryPersonnel.getInTime().getTime(),TimeUnit.MILLISECONDS)/3600.0)*deliveryPersonnel.getHourlyRate();
-        deliveryPersonnel.setBalance(bal);
+        deliveryPersonnel.setBalance(deliveryPersonnel.getBalance()+bal);
         return deliveryPersonnelService.addDeliveryPersonnel(deliveryPersonnel);
     }
 }

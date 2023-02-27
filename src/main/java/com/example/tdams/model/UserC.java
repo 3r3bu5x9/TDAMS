@@ -27,17 +27,17 @@ public class UserC {
     private String passwd;
     @Column(nullable = false)
     private Boolean isSuspended = Boolean.FALSE;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "rid")
     private Role role;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "aid")
     private Address address;
     @JsonIgnore
-    @OneToOne(mappedBy = "userCv", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "userCv", cascade = CascadeType.ALL, orphanRemoval = true)
     private Vendor vendor;
     @JsonIgnore
-    @OneToOne(mappedBy = "userCc", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "userCc", cascade = CascadeType.ALL, orphanRemoval = true)
     private Customer customer;
     @JsonIgnore
     @OneToOne(mappedBy = "userCd", cascade = CascadeType.ALL)
