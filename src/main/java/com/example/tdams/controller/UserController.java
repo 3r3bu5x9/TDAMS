@@ -2,6 +2,7 @@ package com.example.tdams.controller;
 
 import com.example.tdams.model.*;
 import com.example.tdams.service.*;
+import com.example.tdams.util.LoggedUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,25 @@ public class UserController {
     public List<UserC> showAllUsers(){
         return userService.showAllUsers();
     }
+    @GetMapping("/{user_id}")
+    public Object getRoleBasedUser(@PathVariable Long user_id){
+        UserC userC = userService.findUserById(user_id);
+        switch (userC.getRole().getName()){
+            case "ADMIN" -> {
+                 return new LoggedUser(0L,user_id,userC.getRole().getName());
+            }
+            case "CUSTOMER" -> {
+                return new LoggedUser(userC.getCustomer().getCid(),user_id,userC.getRole().getName());
+            }
+            case "VENDOR" -> {
+                 return new LoggedUser(userC.getVendor().getVid(), user_id,userC.getRole().getName());
+            }
+            case "DELIVERY_PERSONNEL" -> {
+                 return new LoggedUser(userC.getDeliveryPersonnel().getDpid(), user_id,userC.getRole().getName());
+            }
+        }
+        return null;
+    }
     @PostMapping("/add/role/{role_id}")
     public UserC addUserWithRole(@RequestBody UserC userC, @PathVariable Long role_id)
     {
@@ -53,9 +73,6 @@ public class UserController {
                 deliveryPersonnel.setBalance(0.0);
                 deliveryPersonnel.toUser(userC);
                 deliveryPersonnelService.addDeliveryPersonnel(deliveryPersonnel);
-            }
-            default -> {
-                System.out.println("Admin User!!!");
             }
         }
         return userService.saveUser(userC);

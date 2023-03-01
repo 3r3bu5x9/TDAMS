@@ -222,3 +222,8 @@ Update Balance
 
 Delete account
 =============
+
+To do
+=====
+Availibilty status
+Order unique items
