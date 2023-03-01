@@ -7,7 +7,7 @@ import com.example.tdams.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @RequestMapping("/address")
 @RestController
 public class AddressController {

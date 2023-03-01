@@ -8,7 +8,7 @@ import com.example.tdams.service.VendorService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @RequestMapping("/order")
 @RestController
 public class OrderController {

@@ -5,7 +5,7 @@ import com.example.tdams.service.RoleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @RequestMapping("/role")
 @RestController
 public class RoleController {

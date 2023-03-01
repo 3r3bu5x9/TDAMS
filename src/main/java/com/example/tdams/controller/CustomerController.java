@@ -6,7 +6,7 @@ import com.example.tdams.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @RequestMapping("/cust")
 @RestController
 public class CustomerController {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+@CrossOrigin("*")
 @RequestMapping("/deliveryp")
 @RestController
 public class DeliveryPersonnelController {

@@ -11,7 +11,7 @@ import com.example.tdams.service.TiffinService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @RequestMapping("/tiffindetail")
 @RestController
 public class TiffinDetailController {

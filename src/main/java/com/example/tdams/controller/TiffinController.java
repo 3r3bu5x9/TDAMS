@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
 import java.util.List;
-
+@CrossOrigin("*")
 @RequestMapping("/tiffin")
 @RestController
 public class TiffinController {
