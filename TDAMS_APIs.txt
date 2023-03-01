@@ -47,6 +47,10 @@ sample body:
 	"passwd": "12345"
 }
 
+Get Role-based user
+===================
+GET | localhost:8080/user/{user_id}
+
 Update user
 ==========
 POST | localhost:8080/user/update/{user_id}
