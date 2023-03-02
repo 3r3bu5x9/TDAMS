@@ -41,4 +41,8 @@ public class ItemController {
     public Item deleteItem(@PathVariable Long item_id){
         return itemService.deleteItemById(item_id);
     }
+    @GetMapping("/{item_id}/get/vendor")
+    public Vendor getVendor(@PathVariable Long item_id){
+        return itemService.findItemById(item_id).getVendor();
+    }
 }

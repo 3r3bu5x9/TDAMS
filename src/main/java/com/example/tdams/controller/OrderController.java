@@ -37,6 +37,7 @@ public class OrderController {
         customer.assignOrder(order);
         order.setIsDelivered(Boolean.FALSE);
         order.setIsPickedUp(Boolean.FALSE);
+        order.setIsAccepted(Boolean.FALSE);
         return orderService.addOrder(order);
     }
     @GetMapping("/cust/{cust_id}")
@@ -47,13 +48,13 @@ public class OrderController {
     public Order findOrderById(@PathVariable Long order_id){
         return orderService.findOrderById(order_id);
     }
-    @GetMapping("/accept/{order_id}/delp/{del_id}")
-    public Order acceptOrder(@PathVariable Long order_id, @PathVariable Long del_id){
+    @GetMapping("/accept/{order_id}/delp/{del_id}/status/{status}")
+    public Order acceptOrder(@PathVariable Long order_id, @PathVariable Long del_id, @PathVariable Integer status){
         Order order = orderService.findOrderById(order_id);
         DeliveryPersonnel deliveryPersonnel = deliveryPersonnelService.findDeliveryPersonnelById(del_id);
         order.assignDeliveryPersonnel(deliveryPersonnel);
         deliveryPersonnel.populateOrder(order);
-        return orderService.addOrder(order);
+        return orderService.setAcceptStatus(order_id,status);
     }
     @PostMapping("/set/delstatus/{order_id}")
     public Order setDeliveryStatus(@PathVariable Long order_id, @RequestBody Integer status){

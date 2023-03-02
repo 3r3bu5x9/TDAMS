@@ -37,6 +37,13 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    public Order setAcceptStatus(Long oid, Integer status) {
+        Order order = orderRepository.findById(oid).get();
+        order.setIsAccepted((status == 1) ? Boolean.TRUE:Boolean.FALSE);
+        return orderRepository.save(order);
+    }
+
+    @Override
     public Order setIsPickedUpStatus(Long oid, Integer status) {
         Order order = orderRepository.findById(oid).get();
         order.setIsPickedUp((status == 1) ? Boolean.TRUE:Boolean.FALSE);

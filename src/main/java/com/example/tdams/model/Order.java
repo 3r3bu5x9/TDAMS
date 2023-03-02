@@ -15,6 +15,8 @@ public class Order {
     private Boolean isDelivered;
     @Column
     private Boolean isPickedUp;
+    @Column
+    private Boolean isAccepted;
     @OneToOne(mappedBy = "order")
     private Customer customer;
     @JsonIgnore

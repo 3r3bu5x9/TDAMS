@@ -9,5 +9,6 @@ public interface OrderService {
     Order addOrder(Order order);
     Order findOrderById(Long oid);
     Order setDeliveryStatus(Long oid,Integer status);
+    Order setAcceptStatus(Long oid, Integer status);
     Order setIsPickedUpStatus(Long oid,Integer status);
 }
