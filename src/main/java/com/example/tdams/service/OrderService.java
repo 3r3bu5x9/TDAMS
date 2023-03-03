@@ -11,4 +11,5 @@ public interface OrderService {
     Order setDeliveryStatus(Long oid,Integer status);
     Order setAcceptStatus(Long oid, Integer status);
     Order setIsPickedUpStatus(Long oid,Integer status);
+    void deleteOrder(Long oid);
 }

@@ -35,4 +35,7 @@ public class DeliveryPersonnel {
     public void populateOrder(Order order){
         this.orders.add(order);
     }
+    public void deleteOrder(Order order){
+        this.orders.remove(order);
+    }
 }

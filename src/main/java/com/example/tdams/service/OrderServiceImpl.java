@@ -49,4 +49,9 @@ public class OrderServiceImpl implements OrderService{
         order.setIsPickedUp((status == 1) ? Boolean.TRUE:Boolean.FALSE);
         return orderRepository.save(order);
     }
+
+    @Override
+    public void deleteOrder(Long oid) {
+        orderRepository.deleteById(oid);
+    }
 }

@@ -56,8 +56,8 @@ public class OrderController {
         deliveryPersonnel.populateOrder(order);
         return orderService.setAcceptStatus(order_id,status);
     }
-    @PostMapping("/set/delstatus/{order_id}")
-    public Order setDeliveryStatus(@PathVariable Long order_id, @RequestBody Integer status){
+    @GetMapping("/set/del/{order_id}/status/{status}")
+    public Order setDeliveryStatus(@PathVariable Long order_id, @PathVariable Integer status){
         double itempricexqty = 0.0;
         Order order = orderService.findOrderById(order_id);
         Customer customer = order.getCustomer();
@@ -71,8 +71,8 @@ public class OrderController {
         customerService.addCustomer(customer);
         return orderService.addOrder(order);
     }
-    @PostMapping("/set/pickedstatus/{order_id}")
-    public Order setPickedUpStatus(@PathVariable Long order_id, @RequestBody Integer status){
+    @GetMapping("/set/picked/{order_id}/status/{status}")
+    public Order setPickedUpStatus(@PathVariable Long order_id, @PathVariable Integer status){
         double itempricexqty = 0.0;
         Order order = orderService.findOrderById(order_id);
         Customer customer = order.getCustomer();
@@ -86,5 +86,16 @@ public class OrderController {
             vendorService.addVendor(vendor);
         }
         return orderService.setIsPickedUpStatus(order_id,status);
+    }
+    @GetMapping("/cancel/{order_id}")
+    public DeliveryPersonnel deleteOrder(@PathVariable Long order_id){
+        Order order = findOrderById(order_id);
+        DeliveryPersonnel deliveryPersonnel = order.getDeliveryPersonnel();
+        order.setIsAccepted(Boolean.FALSE);
+        order.setIsDelivered(Boolean.FALSE);
+        order.setIsPickedUp(Boolean.FALSE);
+        deliveryPersonnel.deleteOrder(order);
+        order.setDeliveryPersonnel(null);
+        return deliveryPersonnelService.addDeliveryPersonnel(deliveryPersonnel);
     }
 }
