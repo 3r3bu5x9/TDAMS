@@ -13,11 +13,11 @@ public class TiffinDetail {
     private Long tdid;
     @Column
     private Long qty;
-    @OneToOne
-    @JoinColumn(name = "iid")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="iid")
     private Item item;
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tid")
     private Tiffin tiffin;
 

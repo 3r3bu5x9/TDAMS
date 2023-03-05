@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "item_tb")
@@ -22,13 +25,10 @@ public class Item {
     @JoinColumn(name = "vid")
     private Vendor vendor;
     @JsonIgnore
-    @OneToOne(mappedBy = "item",cascade = CascadeType.ALL)
-    private TiffinDetail tiffinDetail;
+    @OneToMany(mappedBy = "item",cascade = CascadeType.ALL)
+    private List<TiffinDetail> tiffinDetails = new ArrayList<>();
 
     public void assignVendor(Vendor vendor){
         this.vendor = vendor;
-    }
-    public void assignToTiffinDetail(TiffinDetail tiffinDetail){
-        this.tiffinDetail = tiffinDetail;
     }
 }
