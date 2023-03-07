@@ -1,9 +1,9 @@
 package com.example.tdams.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -22,12 +22,12 @@ public class UserC {
     @Column(nullable = false)
     private LocalDate dob;
     @Column(nullable = false)
-    private String uname;
+    private String username;
     @Column(nullable = false)
-    private String passwd;
+    private String password;
     @Column(nullable = false)
     private Boolean isSuspended = Boolean.FALSE;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rid")
     private Role role;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

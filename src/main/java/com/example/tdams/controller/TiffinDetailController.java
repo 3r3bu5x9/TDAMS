@@ -1,7 +1,6 @@
 package com.example.tdams.controller;
 
 import com.example.tdams.model.Customer;
-import com.example.tdams.model.Item;
 import com.example.tdams.model.Tiffin;
 import com.example.tdams.model.TiffinDetail;
 import com.example.tdams.service.CustomerService;

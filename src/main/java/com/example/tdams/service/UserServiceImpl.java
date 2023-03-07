@@ -2,20 +2,34 @@ package com.example.tdams.service;
 
 import com.example.tdams.model.UserC;
 import com.example.tdams.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+@Transactional
+@Slf4j
+public class UserServiceImpl implements UserService, UserDetailsService {
     UserRepository userRepository;
+    PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserC saveUser(UserC userC) {
+        userC.setPassword(passwordEncoder.encode(userC.getPassword()));
         return userRepository.save(userC);
     }
 
@@ -34,10 +48,10 @@ public class UserServiceImpl implements UserService{
         UserC oldUserC = userRepository.findById(uid).get();
         oldUserC.setFirstName(newUserC.getFirstName());
         oldUserC.setLastName(newUserC.getLastName());
-        oldUserC.setUname(newUserC.getUname());
+        oldUserC.setUsername(newUserC.getUsername());
         oldUserC.setMob(newUserC.getMob());
         oldUserC.setDob(newUserC.getDob());
-        oldUserC.setPasswd(newUserC.getPasswd());
+        oldUserC.setPassword(newUserC.getPassword());
         return userRepository.save(oldUserC);
     }
 
@@ -53,5 +67,17 @@ public class UserServiceImpl implements UserService{
         UserC userC = userRepository.findById(uid).get();
         userC.setIsSuspended(((status == 1) ? Boolean.TRUE:Boolean.FALSE));
         return userRepository.save(userC);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserC userC = userRepository.findByUsername(username);
+        if (userC == null) {
+            log.error("user not found in database");
+            throw new UsernameNotFoundException("user not found in database");
+        } else log.info("user found in database");
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(userC.getRole().getName()));
+        return new User(userC.getUsername(), userC.getPassword(), authorities);
     }
 }
