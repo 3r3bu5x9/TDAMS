@@ -70,6 +70,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public UserC getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserC userC = userRepository.findByUsername(username);
         if (userC == null) {

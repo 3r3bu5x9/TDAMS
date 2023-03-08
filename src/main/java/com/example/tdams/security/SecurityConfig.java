@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
+        http.cors();
         http.authorizeHttpRequests().antMatchers("/login").permitAll();
         http.authorizeHttpRequests().antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
         http.authorizeHttpRequests().antMatchers("/role/**").hasAuthority("ROLE_ADMIN");
@@ -47,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeHttpRequests().antMatchers("/tiffin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER");
         http.authorizeHttpRequests().antMatchers("/vendor/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_VENDOR");
         http.authorizeHttpRequests().antMatchers("/deliveryp/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_DELIVERY_PERSONNEL");
+        http.authorizeHttpRequests().antMatchers("/user/add/**").permitAll();
         http.authorizeHttpRequests().antMatchers("/user/**").authenticated();
         http.authorizeHttpRequests().antMatchers("/address/**").authenticated();
         http.authorizeHttpRequests().anyRequest().authenticated();

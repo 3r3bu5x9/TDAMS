@@ -11,4 +11,5 @@ public interface UserService {
     UserC updateUser(Long uid, UserC newUserC);
     UserC deleteUserById(Long uid);
     UserC setSuspensionStatus(Long uid, Integer status);
+    UserC getUserByUsername(String username);
 }

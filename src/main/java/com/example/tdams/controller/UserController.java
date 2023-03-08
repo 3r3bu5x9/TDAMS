@@ -3,6 +3,7 @@ package com.example.tdams.controller;
 import com.example.tdams.model.*;
 import com.example.tdams.service.*;
 import com.example.tdams.util.LoggedUser;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,25 +32,29 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public List<UserC> showAllUsers() {
-        return userService.showAllUsers();
+    public ResponseEntity<?> showAllUsers() {
+        return ResponseEntity.ok().body(userService.showAllUsers());
     }
 
-    @GetMapping("/{user_id}")
-    public Object getRoleBasedUser(@PathVariable Long user_id) {
-        UserC userC = userService.findUserById(user_id);
-        switch (userC.getRole().getName()) {
-            case "ROLE_ADMIN": {
-                return new LoggedUser(0L, user_id, userC.getRole().getName());
-            }
-            case "ROLE_CUSTOMER": {
-                return new LoggedUser(userC.getCustomer().getCid(), user_id, userC.getRole().getName());
-            }
-            case "ROLE_VENDOR": {
-                return new LoggedUser(userC.getVendor().getVid(), user_id, userC.getRole().getName());
-            }
-            case "ROLE_DELIVERY_PERSONNEL": {
-                return new LoggedUser(userC.getDeliveryPersonnel().getDpid(), user_id, userC.getRole().getName());
+    @PostMapping("/logged")
+    public LoggedUser getRoleBasedUser(@RequestBody UserC tempUserC) {
+        UserC userC = userService.getUserByUsername(tempUserC.getUsername());
+        if (userC != null) {
+            if (passwordEncoder.matches(tempUserC.getPassword(),userC.getPassword())) {
+                switch (userC.getRole().getName()) {
+                    case "ROLE_ADMIN": {
+                        return new LoggedUser(0L, userC.getUid(), userC.getRole().getName());
+                    }
+                    case "ROLE_CUSTOMER": {
+                        return new LoggedUser(userC.getCustomer().getCid(), userC.getUid(), userC.getRole().getName());
+                    }
+                    case "ROLE_VENDOR": {
+                        return new LoggedUser(userC.getVendor().getVid(), userC.getUid(), userC.getRole().getName());
+                    }
+                    case "ROLE_DELIVERY_PERSONNEL": {
+                        return new LoggedUser(userC.getDeliveryPersonnel().getDpid(), userC.getUid(), userC.getRole().getName());
+                    }
+                }
             }
         }
         return null;
@@ -86,5 +91,10 @@ public class UserController {
     @PostMapping("/update/{user_id}")
     public UserC updateUserInfo(@PathVariable Long user_id, @RequestBody UserC newUser) {
         return userService.updateUser(user_id, newUser);
+    }
+
+    @GetMapping("/find/{user_id}")
+    public UserC findUserById(@PathVariable Long user_id) {
+        return userService.findUserById(user_id);
     }
 }
