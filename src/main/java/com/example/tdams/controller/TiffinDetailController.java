@@ -37,7 +37,6 @@ public class TiffinDetailController {
         tiffin.addDetails(tiffinDetail);
         tiffinDetail.assignTiffin(tiffin);
         customer.assignTiffin(tiffin);
-        tiffin.assignCustomer(customer);
         return tiffinService.addTiffin(tiffin);
     }
 //    @GetMapping("/delete/{tiffin_detail_id}/cust/{cust_id}")

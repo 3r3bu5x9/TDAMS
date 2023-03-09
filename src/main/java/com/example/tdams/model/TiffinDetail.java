@@ -14,7 +14,7 @@ public class TiffinDetail {
     private Long tdid;
     @Column
     private Long qty;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="iid")
     private Item item;
     @JsonIgnore
