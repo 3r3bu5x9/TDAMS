@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @CrossOrigin("*")
-@RequestMapping("/item")
+@RequestMapping("/api/item")
 @RestController
 public class ItemController {
     ItemService itemService;

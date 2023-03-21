@@ -11,7 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>TDAMS</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>TDAMS</name>
     <description>TDAMS</description>
     <properties>
@@ -63,6 +63,7 @@
             <artifactId>java-jwt</artifactId>
             <version>3.19.2</version>
         </dependency>
+
     </dependencies>
 
     <build>

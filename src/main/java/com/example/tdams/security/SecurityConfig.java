@@ -34,25 +34,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.cors();
-        http.authorizeHttpRequests().antMatchers("/login").permitAll();
-        http.authorizeHttpRequests().antMatchers("/register/**").permitAll();
-        http.authorizeHttpRequests().antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
-        http.authorizeHttpRequests().antMatchers("/role/**").hasAuthority("ROLE_ADMIN");
-        http.authorizeHttpRequests().antMatchers("/cust/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOMER");
-        http.authorizeHttpRequests().antMatchers("/item/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_VENDOR", "ROLE_DELIVERY_PERSONNEL");
-        http.authorizeHttpRequests().antMatchers("/order/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOMER", "ROLE_DELIVERY_PERSONNEL");
-        http.authorizeHttpRequests().antMatchers("/tiffin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER");
-        http.authorizeHttpRequests().antMatchers("/tiffindetail/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER");
-        http.authorizeHttpRequests().antMatchers("/tiffin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER");
-        http.authorizeHttpRequests().antMatchers("/vendor/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_VENDOR");
-        http.authorizeHttpRequests().antMatchers("/deliveryp/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_DELIVERY_PERSONNEL");
-        http.authorizeHttpRequests().antMatchers("/user/**").authenticated();
-        http.authorizeHttpRequests().antMatchers("/address/**").authenticated();
+        http.authorizeHttpRequests().antMatchers("/api/login/**").permitAll();
+        http.authorizeHttpRequests().antMatchers("/api/register/**").permitAll();
+        http.authorizeHttpRequests().antMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN");
+        http.authorizeHttpRequests().antMatchers("/api/role/**").hasAuthority("ROLE_ADMIN");
+        http.authorizeHttpRequests().antMatchers("/api/cust/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOMER");
+        http.authorizeHttpRequests().antMatchers("/api/item/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER", "ROLE_VENDOR", "ROLE_DELIVERY_PERSONNEL");
+        http.authorizeHttpRequests().antMatchers("/api/order/**").hasAnyAuthority("ROLE_ADMIN","ROLE_CUSTOMER", "ROLE_DELIVERY_PERSONNEL");
+        http.authorizeHttpRequests().antMatchers("/api/tiffin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER");
+        http.authorizeHttpRequests().antMatchers("/api/tiffindetail/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER");
+        http.authorizeHttpRequests().antMatchers("/api/tiffin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_CUSTOMER");
+        http.authorizeHttpRequests().antMatchers("/api/vendor/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_VENDOR");
+        http.authorizeHttpRequests().antMatchers("/api/deliveryp/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_DELIVERY_PERSONNEL");
+        http.authorizeHttpRequests().antMatchers("/api/user/**").authenticated();
+        http.authorizeHttpRequests().antMatchers("/api/address/**").authenticated();
         http.authorizeHttpRequests().anyRequest().authenticated();
-        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
+        http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
     @Bean

@@ -4,7 +4,7 @@ import com.example.tdams.model.UserC;
 import com.example.tdams.service.UserService;
 import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
-@RequestMapping("/admin/")
+@RequestMapping("/api/admin/")
 @RestController
 public class AdminController {
     UserService userService;

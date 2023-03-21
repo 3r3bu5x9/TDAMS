@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
-@RequestMapping("/register")
+@RequestMapping("/api/register")
 @RestController
 public class RegistrationController {
     UserService userService;
